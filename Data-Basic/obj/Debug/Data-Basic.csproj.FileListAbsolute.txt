@@ -1,0 +1,7 @@
+C:\Users\parkj\Desktop\프로그래밍\C#\기초\Data-Basic\bin\Debug\Data-Basic.exe.config
+C:\Users\parkj\Desktop\프로그래밍\C#\기초\Data-Basic\bin\Debug\Data-Basic.exe
+C:\Users\parkj\Desktop\프로그래밍\C#\기초\Data-Basic\bin\Debug\Data-Basic.pdb
+C:\Users\parkj\Desktop\프로그래밍\C#\기초\Data-Basic\obj\Debug\Data-Basic.csproj.AssemblyReference.cache
+C:\Users\parkj\Desktop\프로그래밍\C#\기초\Data-Basic\obj\Debug\Data-Basic.csproj.CoreCompileInputs.cache
+C:\Users\parkj\Desktop\프로그래밍\C#\기초\Data-Basic\obj\Debug\Data-Basic.exe
+C:\Users\parkj\Desktop\프로그래밍\C#\기초\Data-Basic\obj\Debug\Data-Basic.pdb
