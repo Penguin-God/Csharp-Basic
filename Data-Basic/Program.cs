@@ -14,8 +14,12 @@ namespace Data_Basic
         // Main 함수는 언어 불문하고 모든 프로그램 내에 하나만 있어야 하는 함수
         static void Main(string[] args)
         {
-            // break point 설정 후 F10 누르면 1줄씩 넘어가면서 코그의 흐름을 볼 수 있음
-            for(int i = 1; i < 200; i++)
+            //MultiplicationTable();
+            //Star();
+            Console.WriteLine($"{Factorial(5)}");
+
+            // break point 설정 후 F11 누르면 1줄씩 넘어가면서 코그의 흐름을 볼 수 있음
+            for (int i = 1; i < 5; i++)
             {
                 if (i % 3 != 0) continue;
 
@@ -65,6 +69,60 @@ namespace Data_Basic
                     text = "오 이김";
             else text = "응 졌어~";
             Console.WriteLine(text);
+
+            // 중간에 선택적 매개변수를 건너뛰고 지정해서 선언 가능
+            Test(1, 2, e:"Hello Wolrd");
+        }
+
+        // 함수의 오버로딩 : 이름의 재사용
+        // 이름은 같은 함수를 매겨변수의 개수, 형식을 다르게 여러 개 제작하는 것
+        static int Add(int a, int b)
+        {
+            return a + b;
+        }
+
+        static int Add(int a, int b, int c)
+        {
+            return a + b + c;
+        }
+
+        static float Add(float a, float b)
+        {
+            return a + b;
+        }
+
+        // 선택적 매개변수 : 매개변수의 기본값을 정해 따로 지정할지 안할지 선택 가능
+        static void Test(int a, int b, int c = 0, float d = 0f, string e = "")
+        {
+
+        }
+
+        static void MultiplicationTable()
+        {
+            for(int i = 2; i <= 9; i++)
+            {
+                for(int j = 1; j <= 9; j++)
+                {
+                    Console.WriteLine($"{i} X {j} = {i * j}");
+                }
+            }
+        }
+
+        static void Star()
+        {
+            string star = "";
+            for(int i = 1; i <= 5; i++)
+            {
+                star += "*";
+                Console.WriteLine(star);
+            }
+        }
+
+        // 재귀함수로 구현
+        static int Factorial(int number)
+        {
+            if (number <= 1) return 1;
+            return number * Factorial(number-1);
         }
     }
 }
