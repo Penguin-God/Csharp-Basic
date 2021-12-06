@@ -1,0 +1,26 @@
+// 함수는 스택으로 호출되기 때문에 선입선출 형식으로 관리됨
+        // 함수가 실행되면 호출 스택에 추가되고 함수가 끝나면 스택에서 삭제됨
+        // 브레이크 포인트를 함수에 걸어서 특정 함수가 어떤 경로로 호출되었는지 확인할 수 있음
+        static void Print(int value)
+        {
+            Console.WriteLine(value);
+        }
+
+        // 브레이크 포인트에 조건을 걸어서 특정 상황에서 코드를 멈추게 할 수 있음
+        static int AddAndPrint(int a, int b)
+        {
+            int ret = a + b;
+            Print(142444);
+            return ret;
+        }
+
+        // 디버그
+        static void Main(string[] args)
+        {
+            // F10 : 프로시저(함수) 단위 실행으로 함수 안에 들어가지 않고 한 줄씩 실행됨
+            // F11 : 한 단계씩 코드 실행으로 선언된 매서드가 있으면 내부에 들어가서 한 줄씩 실행
+            int add = AddAndPrint(22, 123);
+            ++add;
+
+            Console.WriteLine("aa");
+        }
