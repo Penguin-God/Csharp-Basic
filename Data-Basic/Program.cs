@@ -2,132 +2,15 @@
 
 namespace Data_Basic
 {
-    // 절차(함수) 지향
     class Program
     {
-        class Player
-        {
-            public int hp;
-            public int damage;
-
-            public void Attack()
-            {
-                Console.WriteLine($"Attack!!! On {damage} damage");
-            }
-
-            // 부모 생성자가 있으면 먼저 실행됨
-            public Player(int _hp, int _damage)
-            {
-                hp = _hp;
-                damage = _damage;
-            }
-        }
-
-        // class 생성
-        // class는 참조 타입이기 때문에 주소값을 가짐(모든 데이터는 주소를 가지지만 얘는 주소를 따라가면 또 주소가 있음)
-        class Knight : Player
-        {
-            public int sturnTime;
-            // 부모 생성자에 인자값을 전달할 수 있음
-            public Knight(int _hp, int _damage, int _sturnTime) : base(_hp, _damage)
-            {
-                sturnTime = _sturnTime;
-            }
-
-            // 같은 인자값을 가진 생성자를 를 먼저 실행하는 문법(여기서는 Knight() ), 특정 값만 특별하게 정의하고 싶을 때 사용
-            //public Knight(int _hp) : this()
-            //{
-            //    this.hp = _hp;
-            //}
-        }
-
-        // struct 복사 타입 때문에 값을 넘거거나 대입할 때 독립적으로 작동함
-        // 또한 생성자를 선언할 때 모든 프로퍼티를 정의하지 않으면 에러가 뜨므로 편의성도 좋음
-        struct Mage
-        {
-            public int hp;
-            public int damage;
-
-            public Mage(int _hp, int _damage)
-            {
-                this.hp = _hp;
-                this.damage = _damage;
-            }
-        }
-
-        static void DieMage(Mage mage)
-        {
-            mage.hp = 0;
-        }
-
-        static void DieKnight(Knight knight)
-        {
-            knight.hp = 0;
-        }
-
         static void Main(string[] args)
         {
-            Mage mage = new Mage(22, 3);
-            DieMage(mage); // mage.hp == 100
-
-            Mage mage2 = mage;
-            mage2.hp = 0;
-
-            Knight knight = new Knight(10022, 22, 3);
-            knight.hp = 100;
-            knight.damage = 10;
-            // class 는 값을 기본적으로 참조로 넘기기 때문에 함수 내에서 값이 변경되면 적용이 됨
-            DieKnight(knight); // knight.hp == 0
-
-            // 기본적으로 참조로 값을 넘겨서 값은 주소값을 가짐
-            // 때문에 대입을 시켜버리면 클론을 만드는 것이 아니라 그냥 나와 동기화되는 무언가가 만들어짐
-            Knight knight2 = knight;
-            knight2.hp = -202020;
-
-            // 따라서 현재 클래스의 클론을 만들고 싶다면 내부에 생성자를 만들는게 좋음
-            Knight knight3 = new Knight(knight.hp, 22, 3);
-            knight3.hp = 1200;
-
-            // 부모 자식 변환
-            Player player = new Player(2, 3);
-            bool isMage = player is Knight; // player가 Knight 타입이면 true 아님 false
-            Knight knightPlayer = player as Knight; // player가 Knight 타입이면 변환 후 대입 아님 null
-
-            player = knight2; // 부모에 자식을 대입하는 건 가능 모든 기사는 플레이어니까
-            // knight3 = player; // 자식에 부모를 대입하는 건 불가능 모든 플레이어가 기사라는 증거가 없으니까
-
-            // 얕은 복사 : 같은 객체(주소)를 가리킴
-            // 깊은 복사 : 다른 객체를 가리킴
-
-            // Stack and Heap
-            // 알아야 할 점 : 기본적으로 데이터는 값과 주소를 한 쌍으로 가지고 있음
-
-            // Stack은 메모리의 크기가 작고 가비지 컬랙팅에 의해 관리되지 않고 선입선출(LIFO)의 형식을 따르기 때문에 때문에 성능상 효율적임
-            // 대표적으로 매서드를 호출한 후 작업이 끝나면 더는 사용하지 않는 지역 변수 등을 삭제함 
-            // 또한 Main 함수 내에서 선언된 변수들도 Stack에 저장됨
-
-            // Heap은 메모리 크기가 크며 동적 메모리, 참조 형식이 저장됨, new() 로 생성되는 앵간한 것들은 Heap에 저장됨()
-            // 참조 타입이 저장된다고 모든 참조가 힙을 가리키지는 않음 Main함수 안에 있는 변수들처럼 본체가 Stack에 저장되어 있다면 참조는 Stack을 가르킴
-            // class는 참조 타입이므로 class내에 선언된 변수들도 힙에 저장됨. 즉, 유니티 내의 변수들도 싹 다 Heap에 저장됨
-            // Array와 같은 자료구조도 힙에 저장됨
-            // 메모리의 값들은 힙에 저장되지만 주소는 스택에 저장됨, 즉 Stack을 통해 Heap에 접근하는 것
-            // Stack에서는 주솟값을 저장하기에 복사를 하면 값이 아니라 Heap의 주소를 복사함, 그렇게 얕은 복사가 진행됨
-            // 만약 Stack에서 더 이상 주소에 접근할 수 없다면 주소값을 삭제함
-            // 하지만 "값"은 여전히 Heap 안에 살아 숨쉬고 있음
-            // 이렇게 주소값이 없어져 접근하지 못하는 값을 삭제하는 것이 가비지 컬렉팅, 다만 GC에서 언제 삭제할지는 모르며 이는 Stack에 비해 비효율적임
-
-
-            // 문자열
-            string name = "Penguingod";
-            // contain : 포함하다, 담고 있다
-            bool ss = name.Contains("박"); // true
-            int index = name.IndexOf("박"); // 0 (없으면 -1)
-
-            // 시작 부분부터 지정한 부분까지의 문자열 가져옴
-            string na = name.Substring(0, 4);
-
-            // 지정한 부분부터 끝까지의 문자열 가져옴
-            string naa = name.Substring(4);
+            GameManager game = new GameManager();
+            while (true)
+            {
+                game.PlayeGame();
+            }
         }
     }
 }
