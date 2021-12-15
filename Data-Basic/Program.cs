@@ -1,106 +1,151 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.Reflection;
 
 namespace Data_Basic
 {
     class Program
     {
+        // delegate는 하나의 함수 타입을 만드는 느낌
+        // delegate와 비슷한 형식의 함수는 인자로도 사용 가능함
+        // c++의 함수 포인터와 유사한 느낌으로 사용됨
+        delegate void Del_Test();
+
+        static void OnCilcked(Del_Test testFuc)
+        {
+            testFuc();
+        }
+
+        static void TestDel()
+        {
+            Console.WriteLine("sadasd");
+        }
+
+        static void TestDel2()
+        {
+            Console.WriteLine("adeqgafa3424124");
+        }
+
+
+        static List<Item> items = new List<Item>();
+
         static void Main(string[] args)
         {
-            // 일반화
-            // var는 컴파일러가 값을 보고 때려 맞춰서 선언하는것 int, string과 같은 자료형을 앞에 붙이는 것과 똑같음
-            var var1 = 3;
-            var var2 = "hi";
+            Del_Test del_test = null;
+            del_test += TestDel;
+            del_test += TestDel2;
+            del_test();
 
-            // 오브젝트는 말 그대로 object라는 독립적인 타입 각각의 타입으로 알아서 변환해주는 var와 완전히 다른 개념
-            // 이렇게 사용할 수 있는 이유는 C#의 모든 자료형이 object를 상속받기 때문에 다형성을 이용한 것
-            // 대신 오브젝트는 참조 타입으로 힙에 저장됨
-            object obj1 = 3;
-            object obj2 = "hi";
+            // 델리게이트 클리어 하는법 null로 만들기
+            del_test = null;
+            if (del_test == null) Console.WriteLine("HaHaHa");
+            else Console.WriteLine("FUCKING");
 
-            MyList<int> myIntList = new MyList<int>();
-            myIntList.GetItem(0);
+            // 에러 뜸
+            //del_test();
 
-            Kni kni = new Kni();
-            kni.Hp = 300;
-            //kni.HP = 2013;
-            Console.WriteLine(kni.HP);
+            // 이벤트
+            Test_Event test_Event = new Test_Event();
+            test_Event.EventClick += () => Console.WriteLine("Click A");
+            
+            // 이벤트는 델리게이트와 다르게 외부에서 호출이 불가능하며 구독 혹은 구독 취소만 가능
+            // test_Event.EventClick(); // 에러 뜸
 
+            //while (true)
+            //{
+            //    test_Event.InputManager();
+            //}
 
+            // Lambda : 일회용 함수를 만드는 문법
 
-            // 예외 처리
-            // 게임에서는 에러를 놔두고 Crash나면 빠르게 고치는게 나은 경우가 많음. 이건 경험상으로도 맞는 듯 로그가 뜨는게 고치기 쉬움
-            // 하지만 네트워크, 멀티 접속 실패 등은 재시도를 위해 쓰기도 함
+            // 중괄호 쳐서 바로 대입하는것도 가능
+            items.Add(new Item { ItemType = ItemType.Weapon, Rarity = Rarity.Normal});
+            items.Add(new Item { ItemType = ItemType.Heart, Rarity = Rarity.Unique });
+            items.Add(new Item { ItemType = ItemType.Ring, Rarity = Rarity.Epic });
 
-            int c = -1;
-            try
+            FindItem(IsWeapon);
+            // 익명 함수 문법 : 인자값으로 받는  delegate의 형식에 맞춰서 인자값으로 넘겨줌
+            FindItem(delegate (Item item) { return item.ItemType == ItemType.Weapon; });
+            FindItem((Item item) => { return item.ItemType == ItemType.Weapon; }); // 얘는 람다식
+
+            // delegate를 직접 만들지 않아도 C#에서 만들어둔 애들을 사용 가능
+            // 반환값이 있으면 Func, 없으면 Action 사용
+
+            // Reflection : X-Ray 찍는거, 클래스 내부 정보등을 가져올 수 있음, 디버깅하면서 로그 찍을 때 유용할듯
+            Game game = new Game();
+            // 모든 객체들은 Object를 상속받기 때문에 기본적으로 가지고 있는 함수가 몇개씩 있음
+            Type type = game.GetType();
+            var fields = type.GetFields(BindingFlags.Public
+                | BindingFlags.NonPublic
+                | BindingFlags.Instance);
+            foreach (FieldInfo field in fields)
             {
-                // 1. null을 참조했다
-                // 2. 무한 루프를 돈다(오버 플로우)
-                // 3. 어떠한 값을 0으로 나눴다.
-                int a1 = 0;
-                int b = 22;
+                string access = "Protected"; // IsProtected는 없음
+                if (field.IsPublic) access = "Public";
+                else if (field.IsPrivate) access = "Private";
 
-                c = b / a1;
+                Console.WriteLine($"보호 수준 : {access} \n타입 : {field.FieldType.Name} \n이름 : {field.Name}");
             }
-            catch (DivideByZeroException)
-            {
-                c = 0;
-            }
-            catch(Exception e) // 모든 에러의 대가리 하위 에러 순서 위에 쓰면 에러 뜸
-            {
-                
-            }
-            finally // 마지막에 무조건 실행하는 문법 else, defualt와 같은 느낌
-            {
 
-            }
-            Console.WriteLine(c);
+            // type에 점 붙이면 이벤트, 인터페이스, 함수 별의별걸 다 가져올 수 있음
+            // type.
 
-            // Nullable : ?를 붙이면 널이된다. null이 되지않는 값 타입들도 null로 만들어버림
-            int? number = null;
-            // Nullable은 바로 변환 못하고 캐스팅하거나 .Value를 붙여야 됨
-            int a = number.Value;
+            // Reflection은 런타임 중에 스크립트의 필드 정보를 가져올 수 있음.
+            // 그렇기에 가져온 필드 정보를 바탕으로 유니티와 같이 변수를 동적으로 조절하는 툴을 만들 때 굉장히 유용함
+            // 위에 대괄호 쓰는 []도 어튜리뷰트라는 문법
 
-            int t = a + number.Value;
-
-            // 만약 number가 null이라면 123을 넣고 아니라면 number.Value를 넣어라
-            int aaa = number ?? 123;
+            // 그지같이 귀찮은 언어인 C++을 쓰는 언리얼은 정말 슬프게도 리플렉션이 없어서
+            // 외부 툴을 써서 필드 읽기용 파일을 만드는 등 굉장히 열심히 살고 계심
         }
 
-        // 일반화 문법 : 모든 타입에 대응 및 실행됨
-        class MyList<T>
+        class Game
         {
-            public T[] list = new T[10];
+            public string name;
+            protected int price;
+            private string code;
 
-            public T GetItem(int index)
-            {
-                return list[index];
-            }
-
-            // 함수에서의 사용
-            public void Test<Ty>(Ty item)
-            {
-
-            }
+            void Attack() { }
         }
 
-        // 프로퍼티
-        class Kni
+        // 델리게이트는 타입 그 인자값에 넘길때가 아규먼트 값을 정의하지 않아도 사용 시 정의하면 되므로
+        // 인자값 없이 사용 가능
+        delegate bool ItemSelector(Item item);
+
+        static bool IsWeapon(Item item)
         {
-            protected int hp = 100;
-            //bool isGod = false;
-            public int Hp
+            return item.ItemType == ItemType.Weapon;
+        }
+
+        static Item FindItem(ItemSelector selector)
+        {
+            foreach(Item item in items)
             {
-                get { return hp; }
-                set { hp = value; }
+                if (selector(item)) return item;
             }
+            return null;
+        }
 
-            // 자동 구현 및 초기화 위에 Hp와 완전히 똑같음 기본은 public
-            public int HP { get; set; } = 100;
+        enum ItemType
+        {
+            Weapon,
+            Armor,
+            Ring,
+            Heart,
+        } 
 
-            // 하나 없애는 것도 가능
-            public int NoChangeHP { get; } = 100;
+        enum Rarity
+        {
+            Normal,
+            Rare,
+            Epic,
+            Unique,
+        }
+
+        class Item
+        {
+            public ItemType ItemType;
+            public Rarity Rarity;
         }
     }
 }
