@@ -1,0 +1,7 @@
+C:\Users\parkj\Desktop\프로그래밍\C#\기초\Server\Server\DummyClient\bin\Debug\DummyClient.exe.config
+C:\Users\parkj\Desktop\프로그래밍\C#\기초\Server\Server\DummyClient\bin\Debug\DummyClient.exe
+C:\Users\parkj\Desktop\프로그래밍\C#\기초\Server\Server\DummyClient\bin\Debug\DummyClient.pdb
+C:\Users\parkj\Desktop\프로그래밍\C#\기초\Server\Server\DummyClient\obj\Debug\DummyClient.csproj.AssemblyReference.cache
+C:\Users\parkj\Desktop\프로그래밍\C#\기초\Server\Server\DummyClient\obj\Debug\DummyClient.csproj.CoreCompileInputs.cache
+C:\Users\parkj\Desktop\프로그래밍\C#\기초\Server\Server\DummyClient\obj\Debug\DummyClient.exe
+C:\Users\parkj\Desktop\프로그래밍\C#\기초\Server\Server\DummyClient\obj\Debug\DummyClient.pdb
