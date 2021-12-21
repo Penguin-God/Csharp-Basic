@@ -1,7 +1,0 @@
-C:\Users\parkj\Desktop\프로그래밍\C#\기초\Server\Server\Server\bin\Debug\Server.exe.config
-C:\Users\parkj\Desktop\프로그래밍\C#\기초\Server\Server\Server\bin\Debug\Server.exe
-C:\Users\parkj\Desktop\프로그래밍\C#\기초\Server\Server\Server\bin\Debug\Server.pdb
-C:\Users\parkj\Desktop\프로그래밍\C#\기초\Server\Server\Server\obj\Debug\Server.csproj.AssemblyReference.cache
-C:\Users\parkj\Desktop\프로그래밍\C#\기초\Server\Server\Server\obj\Debug\Server.csproj.CoreCompileInputs.cache
-C:\Users\parkj\Desktop\프로그래밍\C#\기초\Server\Server\Server\obj\Debug\Server.exe
-C:\Users\parkj\Desktop\프로그래밍\C#\기초\Server\Server\Server\obj\Debug\Server.pdb
