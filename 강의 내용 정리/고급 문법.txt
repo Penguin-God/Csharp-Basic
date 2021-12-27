@@ -52,6 +52,7 @@
             }
             Console.WriteLine(c);
 
+
             // Nullable : ?를 붙이면 널이된다. null이 되지않는 값 타입들도 null로 만들어버림
             int? number = null;
             // Nullable은 바로 변환 못하고 캐스팅하거나 .Value를 붙여야 됨

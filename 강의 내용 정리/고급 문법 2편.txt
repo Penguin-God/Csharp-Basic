@@ -8,7 +8,7 @@ namespace Data_Basic
     class Program
     {
         // delegate는 하나의 함수 타입을 만드는 느낌
-        // delegate와 비슷한 형식의 함수는 인자로도 사용 가능함
+        // delegate와 형식의 함수는 일반 자료형처럼 인자, 선언할 때 사용 가능함
         // c++의 함수 포인터와 유사한 느낌으로 사용됨
         delegate void Del_Test();
 
@@ -108,7 +108,7 @@ namespace Data_Basic
             void Attack() { }
         }
 
-        // 델리게이트는 타입 그 인자값에 넘길때가 아규먼트 값을 정의하지 않아도 사용 시 정의하면 되므로
+        // 델리게이트는 인자값을 받는거까지 하나의 타입. 그 인자값에 넘길때 아규먼트 값을 정의하지 않아도 사용 시 정의하면 되므로
         // 인자값 없이 사용 가능
         delegate bool ItemSelector(Item item);
 
